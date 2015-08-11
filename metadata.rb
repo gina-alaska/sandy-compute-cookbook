@@ -1,0 +1,10 @@
+name 'sandy-compute'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures sandy-compute'
+long_description 'Installs/Configures sandy-compute'
+version '0.1.0'
+
+depends 'lvm'
+depends 'gina-gluster'

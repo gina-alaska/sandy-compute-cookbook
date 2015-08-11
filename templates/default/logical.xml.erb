@@ -1,0 +1,15 @@
+<pool type='logical'>
+  <name><%= @name %></name>
+  <source>
+    <name><%= @opts['source_name'] %></name>
+    <format type='lvm2'/>
+  </source>
+  <target>
+    <path><%= @opts['source_path'] %></path>
+    <permissions>
+      <mode>0755</mode>
+      <owner>-1</owner>
+      <group>-1</group>
+    </permissions>
+  </target>
+</pool>

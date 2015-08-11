@@ -1,0 +1,14 @@
+AllCops:
+  Exclude:
+    - Gemfile
+    - Guardfile
+    - Berksfile
+    - Policyfile.rb
+Metrics/LineLength:
+  Max: 200
+Style/HashSyntax:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Style/Documentation:
+  Enabled: false

@@ -1,0 +1,19 @@
+---
+driver:
+  name: vagrant
+  vagrantfiles:
+    - test/storage.rb
+  provision: true
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-6.5
+
+suites:
+  - name: default
+    run_list:
+      - recipe[sandy-compute::default]
+    attributes:
+
