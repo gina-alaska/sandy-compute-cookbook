@@ -1,0 +1,15 @@
+<pool type='fs'>
+  <name><%= @name %></name>
+  <source>
+    <device path='<%= @opts['source_path'] %>'/>
+    <format type='<%= @opts['format'] %>'/>
+  </source>
+  <target>
+    <path><%= @opts['local_path'] %></path>
+    <permissions>
+      <mode>0755</mode>
+      <owner>-1</owner>
+      <group>-1</group>
+    </permissions>
+  </target>
+</pool>

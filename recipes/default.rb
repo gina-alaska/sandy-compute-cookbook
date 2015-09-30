@@ -5,7 +5,15 @@
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 Chef::Resource::Bash.send(:include, ::SandyCompute::Helpers)
 
-%w(libvirt qemu-kvm qemu-kvm-tools virt-manager).each do |pkg|
+# Libvirt packages
+%w(libvirt qemu-kvm qemu-kvm-tools).each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+# virt-manager packages
+%w(virt-manager xorg-x11-xauth dejavu-lgc-sans-fonts).each do |pkg|
   package pkg do
     action :install
   end
@@ -24,6 +32,15 @@ directory '/var/lib/libvirt/images' do
   owner 'qemu'
   group 'qemu'
   recursive true
+end
+
+include_recipe "xfs"
+include_recipe "lvm"
+
+lvm_logical_volume 'lv_libvirt_images' do
+  group 'system'
+  size '500G'
+  filesystem 'xfs'
 end
 
 node['sandy']['libvirt']['pools'].each do |pool, attrs|

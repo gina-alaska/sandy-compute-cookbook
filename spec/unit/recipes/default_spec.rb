@@ -37,6 +37,17 @@ describe 'sandy-compute::default' do
       expect(chef_run).to include_recipe('gina-gluster::client')
     end
 
+    it 'creates local libvirt space' do
+      expect(chef_run).to include_recipe 'xfs::default'
+      expect(chef_run).to include_recipe 'lvm::default'
+
+      expect(chef_run).to create_lvm_logical_volume('lv_libvirt_images').with({
+        group: 'system',
+        size: '500G',
+        filesystem: 'xfs'
+      })
+    end
+
     context 'storage pools exist' do
       before { allow_any_instance_of(Chef::Resource::Bash).to receive(:libvirt_pool_exists?).and_return(true) }
 
