@@ -3,9 +3,7 @@
 # Recipe:: default
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
-Chef::Resource::Bash.send(:include, ::SandyCompute::Helpers)
 
-# Libvirt packages
 %w(libvirt qemu-kvm qemu-kvm-tools).each do |pkg|
   package pkg do
     action :install
@@ -23,9 +21,8 @@ service 'libvirtd' do
   action [:enable, :start]
 end
 
-node.default['glusterfs']['client']['version'] = 3.6
 node.default['glusterfs']['yum']['baseurl'] = "http://download.gluster.org/pub/gluster/glusterfs/3.6/LATEST/EPEL.repo/epel-$releasever/$basearch/"
-include_recipe 'gina-gluster::client'
+include_recipe 'gina-gluster::default'
 
 directory '/var/lib/libvirt/images' do
   action :create
@@ -41,6 +38,7 @@ lvm_logical_volume 'lv_libvirt_images' do
   group 'system'
   size '500G'
   filesystem 'xfs'
+  only_if { vg_exists?('system') }
 end
 
 node['sandy']['libvirt']['pools'].each do |pool, attrs|
@@ -64,6 +62,7 @@ node['sandy']['libvirt']['pools'].each do |pool, attrs|
       virsh pool-autostart #{pool}
       virsh pool-start #{pool}
     EOH
+    only_if { ::File.exists?(attrs['source_path']) }
     not_if { libvirt_pool_exists?(pool) }
   end
 end
