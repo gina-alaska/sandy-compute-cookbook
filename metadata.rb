@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license 'all_rights'
 description 'Installs/Configures sandy-compute'
 long_description 'Installs/Configures sandy-compute'
-version '0.3.0'
+version '0.4.0'
 
 depends 'lvm'
 depends 'xfs'
